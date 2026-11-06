@@ -40,7 +40,10 @@
     </p>
   </table>
   <div class="text-center mt-3">
-    <p *ngIf="buildAttempted && !hasSelections" class="text-danger fw-bold">
+    <p *ngIf="buildAttempted && !hasPizzaInCart" class="text-danger fw-bold">
+      Please add at least one pizza to your cart first before building customizations.
+    </p>
+    <p *ngIf="buildAttempted && hasPizzaInCart && !hasSelections" class="text-danger fw-bold">
       Please select at least one ingredient before building your pizza.
     </p>
     <button class="btn build-btn" type="button" (click)="buildPizza()">

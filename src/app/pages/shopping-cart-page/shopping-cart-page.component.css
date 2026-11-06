@@ -34,14 +34,6 @@
   word-break: break-word;
 }
 
-.custom-badge {
-  background-color: #fff3cd;
-  color: #664d03;
-  border: 1px solid #ffc107;
-  font-size: 0.72rem;
-  font-weight: 500;
-}
-
 @media (max-width: 576px) {
   .line-total {
     min-width: 4rem;

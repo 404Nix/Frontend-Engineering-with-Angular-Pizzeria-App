@@ -4,24 +4,30 @@ import { Pizza } from '../interfaces/pizza.interface';
 import { Ingredient } from '../interfaces/ingredient.interface';
 
 const CART_KEY = 'pizzeria_cart';
+const INGREDIENTS_KEY = 'pizzeria_custom_ingredients';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShoppingCartService {
   shoppingCart: ShoppingCart[] = [];
+  customIngredients: Ingredient[] = [];
 
   constructor() {
     this.loadFromStorage();
   }
 
   private loadFromStorage(): void {
-    const stored = localStorage.getItem(CART_KEY);
-    this.shoppingCart = stored ? JSON.parse(stored) : [];
+    const storedCart = localStorage.getItem(CART_KEY);
+    this.shoppingCart = storedCart ? JSON.parse(storedCart) : [];
+
+    const storedIngredients = localStorage.getItem(INGREDIENTS_KEY);
+    this.customIngredients = storedIngredients ? JSON.parse(storedIngredients) : [];
   }
 
   private saveToStorage(): void {
     localStorage.setItem(CART_KEY, JSON.stringify(this.shoppingCart));
+    localStorage.setItem(INGREDIENTS_KEY, JSON.stringify(this.customIngredients));
   }
 
   addToCart(pizza: Pizza, customizations: Ingredient[] = []) {
@@ -33,13 +39,22 @@ export class ShoppingCartService {
         id: pizza.id,
         type: pizza.type,
         name: pizza.name,
-        price: pizza.price,
+        price: Number(pizza.price),
         image: pizza.image,
         qty: 1,
         customizations: customizations,
       });
     }
     this.saveToStorage();
+  }
+
+  addCustomIngredients(ingredients: Ingredient[]) {
+    this.customIngredients.push(...ingredients);
+    this.saveToStorage();
+  }
+
+  getCustomIngredients(): Ingredient[] {
+    return this.customIngredients;
   }
 
   getCart(): ShoppingCart[] {
@@ -52,6 +67,14 @@ export class ShoppingCartService {
 
   removeItem(index: number) {
     this.shoppingCart.splice(index, 1);
+    if (this.shoppingCart.length === 0) {
+      this.customIngredients.length = 0;
+    }
+    this.saveToStorage();
+  }
+
+  removeIngredient(index: number) {
+    this.customIngredients.splice(index, 1);
     this.saveToStorage();
   }
 
@@ -69,6 +92,8 @@ export class ShoppingCartService {
 
   clearCart() {
     this.shoppingCart.length = 0;
+    this.customIngredients.length = 0;
     localStorage.removeItem(CART_KEY);
+    localStorage.removeItem(INGREDIENTS_KEY);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoppingCart } from 'src/app/interfaces/shoppingCart.interface';
+import { Ingredient } from 'src/app/interfaces/ingredient.interface';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -11,6 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class CheckoutPageComponent implements OnInit {
   cartData: ShoppingCart[] = [];
+  customIngredients: Ingredient[] = [];
   subTotal = 0;
   ingredientsTotal = 0;
   grandTotal = 0;
@@ -28,9 +30,10 @@ export class CheckoutPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartData = this.cartService.getCart();
+    this.customIngredients = this.cartService.getCustomIngredients();
     this.calculateTotals();
 
-    if (this.cartData.length === 0) {
+    if (this.cartData.length === 0 && this.customIngredients.length === 0) {
       this.toastService.show('Your cart is empty!', 'warning');
       this.router.navigate(['/order-pizza']);
     }
@@ -38,11 +41,11 @@ export class CheckoutPageComponent implements OnInit {
 
   calculateTotals(): void {
     this.subTotal = this.cartData.reduce(
-      (sum, item) => sum + item.price * item.qty, 0
+      (sum, item) => sum + Number(item.price) * item.qty, 0
     );
-    this.ingredientsTotal = this.cartData.reduce((sum, item) => {
-      return sum + item.customizations.reduce((s, ing) => s + ing.price, 0);
-    }, 0);
+    this.ingredientsTotal = this.customIngredients.reduce(
+      (sum, ing) => sum + Number(ing.price), 0
+    );
     this.grandTotal = this.subTotal + this.ingredientsTotal;
   }
 
@@ -63,4 +66,3 @@ export class CheckoutPageComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 }
-

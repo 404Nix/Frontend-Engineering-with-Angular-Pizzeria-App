@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoppingCart } from 'src/app/interfaces/shoppingCart.interface';
+import { Ingredient } from 'src/app/interfaces/ingredient.interface';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -11,6 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ShoppingCartPageComponent implements OnInit {
   cartData: ShoppingCart[] = [];
+  customIngredients: Ingredient[] = [];
   subTotal = 0;
   ingredientsTotal = 0;
   grandTotal = 0;
@@ -28,27 +30,22 @@ export class ShoppingCartPageComponent implements OnInit {
 
   refreshCart(): void {
     this.cartData = this.shoppingCart.getCart();
+    this.customIngredients = this.shoppingCart.getCustomIngredients();
     this.calculateTotals();
   }
 
   calculateTotals(): void {
     this.subTotal = this.cartData.reduce(
-      (sum, item) => sum + item.price * item.qty, 0
+      (sum, item) => sum + Number(item.price) * item.qty, 0
     );
-    this.ingredientsTotal = this.cartData.reduce((sum, item) => {
-      return sum + item.customizations.reduce((s, ing) => s + ing.price, 0);
-    }, 0);
+    this.ingredientsTotal = this.customIngredients.reduce(
+      (sum, ing) => sum + Number(ing.price), 0
+    );
     this.grandTotal = this.subTotal + this.ingredientsTotal;
   }
 
   get allIngredients(): { tname: string; price: number }[] {
-    const allIngs: { tname: string; price: number }[] = [];
-    this.cartData.forEach(item => {
-      item.customizations.forEach(ing => {
-        allIngs.push({ tname: ing.tname, price: ing.price });
-      });
-    });
-    return allIngs;
+    return this.customIngredients.map(ing => ({ tname: ing.tname, price: ing.price }));
   }
 
   increaseQty(item: ShoppingCart) {
@@ -73,6 +70,11 @@ export class ShoppingCartPageComponent implements OnInit {
     }
   }
 
+  removeIngredient(index: number) {
+    this.shoppingCart.removeIngredient(index);
+    this.refreshCart();
+  }
+
   clearAll() {
     this.shoppingCart.clearCart();
     this.refreshCart();
@@ -80,7 +82,7 @@ export class ShoppingCartPageComponent implements OnInit {
   }
 
   pay() {
-    if (this.cartData.length === 0) {
+    if (this.cartData.length === 0 && this.customIngredients.length === 0) {
       this.toastService.show('Your cart is empty!', 'warning');
       return;
     }
