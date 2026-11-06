@@ -1,1 +1,37 @@
-<p>order-pizza-page works!</p>
+<section class="order-main container mt-3">
+  <div class="row row-cols-1 row-cols-lg-2 g-3">
+    <div *ngFor="let pizza of pizzaData$ | async" class="col">
+      <div class="pizza-card card card-body h-100 rounded-0">
+        <div class="row align-items-center g-3">
+          <div class="col-12 col-sm-3 mb-auto text-center text-sm-start">
+            <h5 class="fw-bold">{{ pizza.name }}</h5>
+            <span
+              *ngIf="pizza.type === 'veg'; else nonVeg"
+              class="d-inline-block bg-success dot"
+            ></span>
+
+            <ng-template #nonVeg>
+              <span class="d-inline-block bg-danger dot"></span>
+            </ng-template>
+            <p class="fw-bold mt-4 mb-0">{{ pizza.price | currency: "INR" }}</p>
+          </div>
+
+          <div class="col-12 col-sm-5">
+            <p>{{ pizza.description }}</p>
+            <p><strong>Ingredients :</strong> {{ pizza.ingredients }}</p>
+            <p class="mb-0"><strong>Toppings :</strong> {{ pizza.topping }}</p>
+          </div>
+
+          <div
+            class="col-12 col-sm-4 text-center d-flex flex-column align-items-center"
+          >
+            <img class="pizza-img" [src]="pizza.image" [alt]="pizza.name" />
+            <button class="btn btn-custom mt-auto" type="button" (click)="addToCart(pizza)">
+              {{ addedPizzaId === pizza.id ? 'Added ✓' : 'Add to Cart' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

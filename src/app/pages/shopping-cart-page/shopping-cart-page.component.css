@@ -1,0 +1,99 @@
+.cart-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.qty {
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.line-total {
+  min-width: 5rem;
+}
+
+.dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.cart-main {
+  min-height: 100vh;
+}
+
+.cart-item-name {
+  min-width: 0;
+}
+
+.cart-item-name .fw-bold {
+  word-break: break-word;
+}
+
+.custom-badge {
+  background-color: #fff3cd;
+  color: #664d03;
+  border: 1px solid #ffc107;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+@media (max-width: 576px) {
+  .line-total {
+    min-width: 4rem;
+    font-size: 0.9rem;
+  }
+
+  .cart-img {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.qty-btn {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #6c757d;
+  --bs-btn-border-color: #6c757d;
+
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #5c636a;
+  --bs-btn-hover-border-color: #5c636a;
+
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #4d5154;
+  --bs-btn-active-border-color: #4d5154;
+}
+
+.pay-btn {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #ffc107;
+  --bs-btn-border-color: #ffc107;
+
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #e0a800;
+  --bs-btn-hover-border-color: #e0a800;
+
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #c69500;
+  --bs-btn-active-border-color: #c69500;
+
+  --bs-btn-focus-shadow-rgb: 255, 193, 7;
+}
+
+.clear-btn {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #212529;
+  --bs-btn-border-color: #212529;
+
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #424649;
+  --bs-btn-hover-border-color: #424649;
+
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #565e64;
+  --bs-btn-active-border-color: #565e64;
+}

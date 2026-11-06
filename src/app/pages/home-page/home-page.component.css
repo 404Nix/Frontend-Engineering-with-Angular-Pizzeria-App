@@ -1,0 +1,38 @@
+.home-title {
+  font-weight: 100;
+  font-size: 1.5rem;
+}
+
+.home-body {
+  font-weight: 100;
+  font-size: 0.75rem;
+}
+
+.home-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .home-title {
+    font-weight: 300;
+    font-size: 2rem;
+  }
+
+  .home-body {
+    font-weight: 200;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .home-title {
+    font-weight: 300;
+    font-size: 2.5rem;
+  }
+
+  .home-body {
+    font-weight: 200;
+  }
+}

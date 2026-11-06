@@ -1,1 +1,50 @@
-<p>build-ur-pizza-page works!</p>
+<section class="container ingredients-table mt-4">
+  <div class="ingredients-heading text-center">
+    <p>
+      Pizzeria now gives you options to build your own pizza. Customize your
+      pizza by choosing ingredients from the list given below
+    </p>
+  </div>
+  <table class="table table-bordered fixed-table m-auto">
+    <tbody>
+      <tr *ngFor="let ingredients of ingredientsData$ | async">
+        <td>
+          <img
+            class="img-fluid ingredients-img"
+            [src]="ingredients.image"
+            [alt]="ingredients.tname"
+          />
+        </td>
+        <td>
+          <strong>
+            {{ ingredients.tname }} {{ ingredients.price | currency: "INR" }}
+          </strong>
+        </td>
+        <td>
+          <label
+            class="d-inline-flex align-items-center"
+            style="cursor: pointer"
+          >
+            <input
+              type="checkbox"
+              #cb
+              (change)="toggleIngredient(ingredients, cb.checked)"
+            />
+            <span class="px-4 text-custom">Add</span>
+          </label>
+        </td>
+      </tr>
+    </tbody>
+    <p class="total-cost fs-5 fw-bold my-3">
+      Total Cost : {{ totalCost | currency: "INR" }}
+    </p>
+  </table>
+  <div class="text-center mt-3">
+    <p *ngIf="buildAttempted && !hasSelections" class="text-danger fw-bold">
+      Please select at least one ingredient before building your pizza.
+    </p>
+    <button class="btn build-btn" type="button" (click)="buildPizza()">
+      Build Ur Pizza
+    </button>
+  </div>
+</section>

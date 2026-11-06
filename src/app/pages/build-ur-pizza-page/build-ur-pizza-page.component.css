@@ -1,0 +1,38 @@
+.fixed-table {
+  width: 600px;
+  table-layout: fixed;
+}
+
+.ingredients-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.fixed-table td {
+  padding: 0.25rem 0.5rem;
+  vertical-align: middle;
+}
+
+.text-custom {
+  color: #e6a100;
+  font-weight: 600;
+}
+
+.total-cost {
+  color: navy;
+}
+
+.build-btn {
+  --bs-btn-color: #ff9800;
+  --bs-btn-bg: #000;
+  --bs-btn-border-color: #ff9800;
+
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #ff9800;
+  --bs-btn-hover-border-color: #ff9800;
+
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #e68900;
+  --bs-btn-active-border-color: #e68900;
+}
